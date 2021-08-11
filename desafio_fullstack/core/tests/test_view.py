@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.test import TestCase
 from django.urls import reverse
 
@@ -11,6 +12,9 @@ class EstadoViewTestCase(TestCase):
         self.estado = Estado.objects.create(sigla='MG', nome='Minas Gerais')
         self.url_update = reverse('core:estados_update', kwargs={'estado_pk': self.estado.id})
         self.url_delete = reverse('core:estados_delete', kwargs={'estado_pk': self.estado.id})
+        # login
+        User.objects.create_superuser('usuario', '', 'usuario')
+        self.client.login(username='usuario', password='usuario')
 
     def test_url_list_sucesso(self):
         """A url deve retornar status 200"""
@@ -73,6 +77,9 @@ class CidadeViewTestCase(TestCase):
         self.cidade = Cidade.objects.create(estado=self.estado, nome='Belo Horizonte')
         self.url_update = reverse('core:cidades_update', kwargs={'cidade_pk': self.cidade.id})
         self.url_delete = reverse('core:cidades_delete', kwargs={'cidade_pk': self.cidade.id})
+        # login
+        User.objects.create_superuser('usuario', '', 'usuario')
+        self.client.login(username='usuario', password='usuario')
 
     def test_url_list_sucesso(self):
         """A url deve retornar status 200"""

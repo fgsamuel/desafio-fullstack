@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'desafio_fullstack.core.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'desafio_fullstack.urls'
@@ -125,3 +126,13 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_URLS = (
+    r'(.*)',
+)
+NO_AUTH_URLS = (
+    r'/admin(.*)$',
+    r'/accounts/login/',
+    r'/api/',
+
+)

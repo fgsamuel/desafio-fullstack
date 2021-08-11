@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -123,3 +124,37 @@ def cidades_delete(request, cidade_pk):
         mensagem = 'Cidade excluída com sucesso.'
         messages.add_message(request, messages.SUCCESS, mensagem, extra_tags='alert alert-success')
         return redirect(reverse('core:cidades_list'))
+
+
+def home_view(request):
+    return render(request, 'core/home.html')
+
+
+# Parte de login e logout
+def login_view(request):
+    if request.method == 'GET':
+        return _login_view_get(request)
+    else:
+        return _login_view_post(request)
+
+
+def _login_view_get(request):
+    return render(request, 'core/login.html')
+
+
+def _login_view_post(request):
+    username = request.POST.get('username', '')
+    senha = request.POST.get('senha', '')
+    user = authenticate(username=username, password=senha)
+    if user is None:
+        mensagem = 'Usuário e/ou senha inválidos'
+        messages.add_message(request, messages.ERROR, mensagem)
+        return render(request, 'core/login.html', status=403)
+    login(request, user)
+    next_url = request.GET.get('next', '/')
+    return redirect(next_url)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('core:home'))

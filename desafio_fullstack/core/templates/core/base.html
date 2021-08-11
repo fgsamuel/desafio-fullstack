@@ -1,14 +1,3 @@
-<!--
-=========================================================
-Material Dashboard - v2.1.2
-=========================================================
-
-Product Page: https://www.creative-tim.com/product/material-dashboard
-Copyright 2020 Creative Tim (https://www.creative-tim.com)
-Coded by Creative Tim
-
-=========================================================
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 {% load static %}
 
 <!DOCTYPE html>
@@ -40,11 +29,17 @@ The above copyright notice and this permission notice shall be included in all c
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+      <div class="logo"><a href="{% url 'core:home' %}" class="simple-text logo-normal">
           Avaliação - Labr Dev
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
+          <li class="nav-item {% if 'home' in request.resolver_match.url_name %}active{% endif %}">
+            <a class="nav-link" href={% url 'core:home' %}>
+            <i class="material-icons">home</i>
+            <p>Home</p>
+            </a>
+          </li>
           <li class="nav-item {% if 'estados_' in request.resolver_match.url_name %}active{% endif %}">
             <a class="nav-link" href={% url 'core:estados_list' %}>
               <i class="material-icons">content_paste</i>
@@ -55,6 +50,12 @@ The above copyright notice and this permission notice shall be included in all c
             <a class="nav-link" href={% url 'core:cidades_list' %}>
               <i class="material-icons">content_paste</i>
               <p>Cidades</p>
+            </a>
+          </li>
+          <li class="nav-item active-pro ">
+            <a class="nav-link" href={% url 'core:logout' %}>
+              <i class="material-icons">unarchive</i>
+              <p>Sair do sistema</p>
             </a>
           </li>
         </ul>
@@ -108,21 +109,21 @@ The above copyright notice and this permission notice shall be included in all c
         {% block content %}
         {% endblock content %}
       </div>
-      <div class="row">
-        <footer class="footer">
-          <div class="container-fluid">
-            <nav class="float-left">
-              <ul>
-                <li>
-                  <a href="https://api.whatsapp.com/send?phone=5531988422436&text=Ol%C3%A1.%20Peguei%20seu%20telefone%20no%20site%20de%20demonstra%C3%A7%C3%A3o." target="_blank">
-                    Contato com o Desenvolvedor
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </footer>
+  </div>
+  <div class="row">
+    <footer class="footer">
+      <div class="container-fluid">
+        <nav class="float-left">
+          <ul>
+            <li>
+              <a href="https://api.whatsapp.com/send?phone=5531988422436&text=Ol%C3%A1.%20Peguei%20seu%20telefone%20no%20site%20de%20demonstra%C3%A7%C3%A3o." target="_blank">
+                Contato com o Desenvolvedor
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
+    </footer>
   </div>
 
   <!--   Core JS Files   -->

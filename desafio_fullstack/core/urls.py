@@ -1,9 +1,15 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 
 from desafio_fullstack.core.views import estados_list, estados_create, estados_update, estados_delete, cidades_list, \
     cidades_update, cidades_delete, cidades_create
+from desafio_fullstack.core.views_api import EstadoViewSet, CidadeViewSet
 
 app_name = 'core'
+
+router = routers.DefaultRouter()
+router.register(r'estados', EstadoViewSet)
+router.register(r'cidades', CidadeViewSet)
 
 urlpatterns = [
     path('estados/', estados_list, name='estados_list'),
@@ -14,4 +20,5 @@ urlpatterns = [
     path('cidades/create/', cidades_create, name='cidades_create'),
     path('cidades/update/<int:cidade_pk>/', cidades_update, name='cidades_update'),
     path('cidades/delete/<int:cidade_pk>/', cidades_delete, name='cidades_delete'),
+    path('api/', include(router.urls)),
 ]

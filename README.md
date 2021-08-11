@@ -43,3 +43,135 @@ Seu projeto será avaliado de acordo com os seguintes critérios.
 
 Adicionalmente, tentaremos verificar a sua familiarização com as bibliotecas padrões (standard libs), bem como sua experiência com programação orientada a objetos a partir da estrutura de seu projeto.
 
+# Documentação da entrega
+
+## Instalação do projeto
+Versão de python utilizada no projeto: *Python 3.9.1*
+
+Após fazer o download do código fonte é necessário criar um virtual env para isolar as bibliotecas do projeto
+
+Para isso, acesse a pasta raiz do projeto via terminal e digite o seguinte comando:
+
+```
+python -m venv .venv
+```
+
+Este comando cria uma virutal env em uma pasta chamada `.venv`.
+
+Para ativar a virtual env recém criada, utilize o seguinte comando:
+
+```
+# windows
+.venv\Scrips\activate.bat
+
+# linux
+source .venv/bin/activate
+```
+
+Para instalar todas as dependências do projeto, rode o comando abaixo:
+
+```
+pip install -r requirements.txt
+```
+
+## Variáveis de ambiente
+
+As variáveis de ambiente são desacopladas do código, e para funcionar você deve fazer uma cópia do arquivo
+`.env-sample` com o nome `.env` e trocar as variáveis conforme a necessidade do seu ambiente
+
+## Subindo o projeto para fazer testes locais
+
+Ainda dentro da pasta do projeto digite o seguinte comando para iniciar o servidor interno da aplicação
+
+```
+# Criando o banco de dados
+python manage.py migrate
+
+# Executando os testes unitários
+python manage.py test
+
+# executando o servidor embutido
+python manage.py runserver
+```
+
+Após isso é possível acessar a aplicação na url `http://localhost:8000`
+
+## Acessando a aplicação
+
+A aplicação e a api rest estão protegidas para acesso autenticado.
+
+Para efetuar testes é necessário primeiramente criar um usuário administrador através do comando
+
+```
+python manage.py createsuperuser
+```
+
+Você deverá informar os campos solicitados após o comando.
+
+Feito isso, utilize esse mesmo usuário e senha para fazer login na aplicação e na api
+
+### Fazendo login na api
+
+A api tem dois endpoints de dados
+* localhost:8000/api/estados/
+* localhost:8000/api/cidades/
+
+e para autenticação ela utiliza um token JWT que pode ser obtido no seguinte endpoint
+
+* localhost:8000/api/token/
+
+os dados a serem enviados no post para obter um token são:
+
+```
+{
+    "username": <seu usuario>,
+    "password": <sua senha>
+}
+```
+
+E o retorno da api tem o seguinte formato, caso você seja autenticado:
+
+```
+{
+    "refresh": <hash para atualizar o token>,
+    "access": <hash do token>
+}
+```
+
+E para fazer as requisições autenticadas você deve adicionar um header na sua requisição com o nome
+`Authorization` e o valor deve ser `Bearer <hash do token>`
+
+### Observação importante quanto ao uso da api de cidades
+
+Para facilitar o trabalho com os dados da cidade (que tem relação com o estado) ela tem o formato
+de apresentação diferente do formato de inclusão/alteração dos dados.
+
+Para exibição ela tem o seguinte formato:
+
+```
+{
+    "id": <id da cidade>,
+    "estado": {
+        "id": <id do estado>,
+        "sigla": <sigla do estado>,
+        "nome": <nome do estado>
+    },
+    "nome": <nome da cidade>
+}
+```
+
+E para inclusão ou alteração de dados ela usa o seguinte formato
+
+```
+{
+    "id": <id da cidade>,
+    "estado": <id do estado>,
+    "nome": <nome da cidade>
+}
+```
+
+## Normalização dos dados
+
+Tanto quando inserido por formulário ou por api, o sistema faz a seguinte normalização dos dados
+Sigla do estado toda em maiúsculo
+Nome do estado ou da cidade com a primeira letra de cada palavra maiúscula e as demais minúsculas.

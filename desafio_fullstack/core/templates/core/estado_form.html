@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title ">Informe os dados para o cadastro</h4>
+      </div>
+      <div class="card-body">
+        <form method="post" class="formulario">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-12 col-md-2">
+              <div class="form-group">
+                <label class="bmd-label-floating">Sigla</label>
+                {{ form.sigla }}
+                {% for error in form.sigla.errors %}
+                <div class="">
+                  {{ error|escape }}
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="col-12 col-md-10">
+              <div class="form-group">
+                <label class="bmd-label-floating">Nome</label>
+                {{ form.nome }}
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <a href={% url 'core:estados_create' %} class="btn btn-warning pull-right">Cancelar</a>
+              <button type="submit" class="btn btn-primary pull-right">Salvar estado</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock content %}

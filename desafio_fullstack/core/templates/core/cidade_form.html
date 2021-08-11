@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+
+{% block content%}
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title ">Informe os dados para o cadastro</h4>
+      </div>
+      <div class="card-body">
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <i class="material-icons">close</i>
+          </button>
+          <span>{{error}}</span>
+        </div>
+        {% endfor %}
+        <form method="post" class="formulario">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-12 col-sm-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Estado</label>
+                {{ form.estado }}
+                {% for error in form.estado.errors %}
+                <div class="">
+                  {{ error|escape }}
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Nome</label>
+                {{ form.nome }}
+                {% for error in form.nome.errors %}
+                <div class="">
+                  {{ error|escape }}
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <a href={% url 'core:cidades_list' %} class="btn btn-warning pull-right">Cancelar</a>
+              <button type="submit" class="btn btn-primary pull-right">Salvar cidade</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content%}

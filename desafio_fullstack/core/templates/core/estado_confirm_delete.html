@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title ">Confirmar exclusão de estado</h4>
+      </div>
+      <div class="card-body">
+        <p class="m-3">Você tem certeza que deseja apagar o estado <strong>{{estado.nome}}</strong> e todas cidadades que estão
+          associadas a ele?</p>
+        <form method="post" class="formulario">
+          {% csrf_token %}
+          <div class="row">
+            <div class="row">
+              <div class="col-12">
+                <a href={% url 'core:estados_list' %} class="btn btn-warning pull-right">Cancelar</a>
+                <button type="submit" class="btn btn-primary pull-right">Apagar estado e suas cidades</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock content %}

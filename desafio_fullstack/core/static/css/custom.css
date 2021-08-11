@@ -1,0 +1,14 @@
+.formulario input {
+  display: block;
+  width: 100%;
+  padding: 0.4375rem 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border: 1px solid #d2d2d2;
+  border-radius: 0;
+  box-shadow: none;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}

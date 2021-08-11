@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <form method="post">
+      {% csrf_token %}
+      <div class="input-group no-border">
+        <input type="text" value="{{pesquisa}}" class="form-control" placeholder="Pesquisa..." name="pesquisa">
+        <button type="submit" class="btn btn-white btn-round btn-just-icon">
+          <i class="material-icons">search</i>
+          <div class="ripple-container"></div>
+        </button>
+        {% if pesquisa %}
+        <a href={% url 'core:cidades_list' %} class="btn btn-warning btn-round btn-just-icon">
+        <i class="material-icons">clear</i>
+        <div class="ripple-container"></div>
+        </a>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <a href={% url 'core:cidades_create' %} class="btn btn-primary pull-right">Adicionar nova Cidade</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    {% if not cidades %}
+    <div class="alert alert-info">
+      <span>Nenhuma cidade encontrada.</span>
+    </div>
+    {% else %}
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title ">Tabela de cidades</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+            <th>Estado</th>
+            <th>Nome</th>
+            <th>Alterar</th>
+            <th>Apagar</th>
+            </thead>
+            <tbody>
+            {% for cidade in cidades %}
+            <tr>
+              <td>{{cidade.estado.nome}}</td>
+              <td>{{cidade.nome}}</td>
+              <td>
+                <a href={% url 'core:cidades_update' cidade_pk=cidade.id %} class="btn btn-warning btn-round btn-just-icon">
+                <i class="material-icons">edit</i>
+                <div class="ripple-container"></div>
+                </a>
+              </td>
+              <td>
+                <a href={% url 'core:cidades_delete' cidade_pk=cidade.id %} class="btn btn-danger btn-round btn-just-icon">
+                <i class="material-icons">delete</i>
+                <div class="ripple-container"></div>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}
